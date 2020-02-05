@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {NavLink, Link} from 'react-router-dom';
-import axios from 'axios';
+import API from "../data/api"
 import LineIcon from 'react-lineicons';
 
 function Header(){
@@ -12,11 +12,16 @@ function Header(){
     }
 
     useEffect(() =>{
-        axios.get('/api/information')
-            .then(response =>{
-                setInformation(response.data);
-            })
-    }, [])
+        const fetchData = async () => {
+          try {
+            let response = await API.get('/portfolio')
+            setInformation(response.data.information);
+          } catch (e) {
+            console.log(e)
+          }
+        };
+        fetchData();
+      }, [])
 
     return (
         <nav className={navigationToggler ? "mi-header is-visible" : "mi-header"}>

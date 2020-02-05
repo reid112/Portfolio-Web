@@ -1,15 +1,20 @@
 import React, {useState, useEffect} from "react";
-import axios from 'axios';
+import API from "../data/api"
 import LineIcon from 'react-lineicons';
 
 function Socialicons(props){
   const [socialLinks, setSocialLinks] = useState({});
 
-  useEffect(() => {
-    axios.get('/api/information')
-      .then(response =>{
-        setSocialLinks(response.data.socialLinks);
-      })
+  useEffect(() =>{
+    const fetchData = async () => {
+      try {
+        let response = await API.get('/portfolio')
+        setSocialLinks(response.data.information.socialLinks);
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    fetchData();
   }, [])
 
   return (
