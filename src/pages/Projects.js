@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import TrackVisibility from "react-on-screen";
 import Project from '../components/Project';
 import Sectiontitle from "../components/Sectiontitle";
 import Layout from "../components/Layout";
+import API from "../data/api"
 
 function Projects() {
   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {
-    axios.get('/api/projects')
-      .then( response => {
-        setProjects(response.data);
-      })
-  })
+  useEffect(() =>{
+    const fetchData = async () => {
+      try {
+        let response = await API.get('/portfolio')
+        setProjects(response.data.projects);
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    fetchData();
+  }, [])
 
   return (
     <Layout>

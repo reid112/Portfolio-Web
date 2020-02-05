@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import FsLightbox from "fslightbox-react";
 import * as Icon from "react-feather";
 import Sectiontitle from "../components/Sectiontitle";
 import Layout from "../components/Layout";
+import API from "../data/api"
 
 function About(){
   const [toggler, setToggler] = useState(false);
@@ -16,10 +16,15 @@ function About(){
   }
 
   useEffect(() =>{
-    axios.get('/api/information')
-      .then(response =>{
-        setInformation(response.data)
-      })
+    const fetchData = async () => {
+      try {
+        let response = await API.get('/portfolio')
+        setInformation(response.data.information);
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    fetchData();
   }, [])
 
   return (
@@ -58,8 +63,8 @@ function About(){
                   {!information.name ? null : <li>
                     <b>Full Name</b> {information.name}
                   </li>}
-                  {!information.age ? null : <li>
-                    <b>Age</b> {information.age} Years
+                  {!information.birthDate ? null : <li>
+                    <b>Birth Date</b> {information.birthDate}
                   </li>}
                   {!information.phone ? null : <li>
                     <b>Phone</b> {information.phone}

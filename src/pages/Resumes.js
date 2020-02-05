@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import TrackVisibility from "react-on-screen";
 import Sectiontitle from "../components/Sectiontitle";
 import Smalltitle from '../components/Smalltitle';
 import Layout from "../components/Layout";
 import Progress from "../components/Progress";
 import Resume from "../components/Resume";
+import API from "../data/api"
 
 function Resumes(){
   const [skills, setSkills] = useState([]);
@@ -13,15 +13,19 @@ function Resumes(){
   const [educationExperience, setEducationExperience] = useState([]);
 
   useEffect(() =>{
-    axios.get('/api/skills')
-      .then(response =>{
-        setSkills(response.data);
-      })
-    axios.get('/api/experience')
-      .then(response =>{
-        setWorkingExperience(response.data.workingExperience);
-        setEducationExperience(response.data.educationExperience);
-      })
+    const fetchData = async () => {
+      try {
+        let response = await API.get('/portfolio')
+        let experience = response.data.experience;
+
+        setSkills(response.data.skills);
+        setWorkingExperience(experience.workingExperience);
+        setEducationExperience(experience.educationExperience);
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    fetchData();
   }, [])
 
   return (

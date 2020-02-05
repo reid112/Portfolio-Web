@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import Particles from "react-particles-js";
 import Socialicons from "../components/Socialicons";
 import Layout from "../components/Layout";
+import API from "../data/api"
 
 function Home(){
   const [information, setInformation] = useState("");
@@ -39,12 +39,19 @@ function Home(){
       }
     }
   };
+  
   useEffect(() =>{
-    axios.get('/api/information')
-    .then( response => {
-      setInformation(response.data);
-    })
+    const fetchData = async () => {
+      try {
+        let response = await API.get('/portfolio')
+        setInformation(response.data.information);
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    fetchData();
   }, [])
+
   return (
     <Layout>
       <div className="mi-home-area mi-padding-section">

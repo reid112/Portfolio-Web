@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import * as Icon from "react-feather";
 import Sectiontitle from "../components/Sectiontitle";
 import Layout from "../components/Layout";
+import API from "../data/api"
 
 function Contact(){
   const [phoneNumbers, setPhoneNumbers] = useState([]);
@@ -33,8 +33,7 @@ function Contact(){
       setMessage('Message is required');
     } else{
       setError(false);
-      // TODO: Need to actually send email
-      setMessage('You message has been sent!');
+      sendMessage();
     }
   }
   const handleChange = (event) => {
@@ -66,13 +65,40 @@ function Contact(){
     }
   }
 
-  useEffect(() => {
-    axios.get('/api/contactinfo')
-      .then(response =>{
-        setPhoneNumbers(response.data.phoneNumbers);
-        setEmailAddress(response.data.emailAddress);
-        setAddress(response.data.address);
+  const sendMessage = async () => {
+    try {
+      let response = await API.post('/sendEmail', {
+        name: formdata.name,
+        email: formdata.email,
+        subject: formdata.subject,
+        message: formdata.message
       })
+
+      if (response.status === 200) {
+        setMessage('You message has been sent!');
+      } else {
+        setMessage('Something went wrong');
+      }
+    } catch (e) {
+      console.log(e)
+      setMessage('Something went wrong');
+    }    
+  }
+
+  useEffect(() =>{
+    const fetchData = async () => {
+      try {
+        let response = await API.get('/portfolio')
+        let contactInfo = response.data.contactInfo;
+
+        setPhoneNumbers(contactInfo.phoneNumbers);
+        setEmailAddress(contactInfo.emailAddress);
+        setAddress(contactInfo.address);
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    fetchData();
   }, [])
 
   return (
