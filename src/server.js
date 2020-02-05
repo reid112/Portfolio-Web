@@ -7,10 +7,10 @@ const app = express();
 
 app.use(compression());
 
-app.use('/static', express.static('../build/static'));
+app.use('/static', express.static(process.env.ABSOLUTE_STATIC_PATH));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join('../build/index.html'));
+  res.sendFile(path.join(process.env.ABSOLUTE_STATIC_PATH, '../index.html'));
 });
 
 const PORT = 3002;
