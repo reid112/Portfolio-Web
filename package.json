@@ -21,7 +21,8 @@
     "slick-carousel": "^1.8.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3002 react-scripts start",
+    "prod": "pm2 start ./src/server.js --name Portfolio-Web",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
