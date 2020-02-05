@@ -20,6 +20,7 @@
     "shave": "^2.5.6",
     "slick-carousel": "^1.8.1"
   },
+  "homepage": "https://rjreid.ca",
   "scripts": {
     "start": "PORT=3002 react-scripts start",
     "prod": "pm2 start ./server.js --name Portfolio-Web",
