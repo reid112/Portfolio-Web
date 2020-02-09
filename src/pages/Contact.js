@@ -76,6 +76,13 @@ function Contact(){
 
       if (response.status === 200) {
         setMessage('You message has been sent!');
+        setTimeout(function(){ setMessage(''); }, 3000);
+        setFormdata({
+          name: "",
+          email: "",
+          subject: "",
+          message: ""
+        });
       } else {
         setMessage('Something went wrong');
       }
@@ -110,7 +117,7 @@ function Contact(){
             <div className="col-lg-6">
               <div className="mi-contact-formwrapper">
                 <h4>Get In Touch</h4>
-                <form action="#" className="mi-form mi-contact-form" onSubmit={submitHandler}>
+                <form id="contactForm" action="#" className="mi-form mi-contact-form" onSubmit={submitHandler}>
                   <div className="mi-form-field">
                     <label htmlFor="contact-form-name">Enter your name*</label>
                     <input onChange={handleChange} type="text" name="name" id="contact-form-name" value={formdata.name}/>
