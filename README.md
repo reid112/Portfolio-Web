@@ -1,3 +1,5 @@
+This is the code for the first version of my portfolio.  It has since been redone.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
